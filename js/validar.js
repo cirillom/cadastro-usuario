@@ -19,10 +19,11 @@ nome.addEventListener('focusout', validarNome);
 nome.addEventListener('focusout', validarSenha);
 
 function validarNome(){ 
+    formResult.textContent = "";
     const regexNome = /^[A-Z][a-z]+ [A-Z][a-z]+$/;
-
+    
     var noSpacesName = nome.value.replace(/\s/g, '');
-
+    
     if(!nome.value.trim().match(regexNome) || noSpacesName.length <= 6){
         nomeHelp.textContent = "Formato de nome inválido"; 
         nomeHelp.style.color="red";
@@ -38,6 +39,7 @@ ano.addEventListener('focusout', validarAno);
 ano.addEventListener('focusout', validarSenha);
 
 function validarAno(e) {
+    formResult.textContent = "";
     const regexAno = /^[0-9]{4}$/;
 
     const anoTrimado = ano.value.trim();
@@ -71,6 +73,8 @@ function validarAno(e) {
 email.addEventListener('focusout', validarEmail);
 
 function validarEmail(e) {
+    formResult.textContent = "";
+
     const regexEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.(br|com|net|org)$/;
     if (!email.value.trim().match(regexEmail)) {
         emailHelp.textContent = "Formato de email inválido";
@@ -85,6 +89,8 @@ function validarEmail(e) {
 senha.addEventListener('focusout', validarSenha);
 
 function validarSenha(e) {
+    formResult.textContent = "";
+
     const regexSenha = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#%&!+*])[a-zA-Z0-9@#%&!+*]{6,20}$/;
     const firstName = nome.value.trim().split(' ')[0];
     const lastName = nome.value.trim().split(' ')[1];
@@ -95,14 +101,25 @@ function validarSenha(e) {
     }
 
     if (!senha.value.match(regexSenha)) {
-        senhaHelp.textContent = "Senha inválida.";
-        senhaHelp.style.color = "red";
-        return false;
-    } else if (senha.value.includes(firstName) || senha.value.includes(lastName) || senha.value.includes(anoVal)) {
-        senhaHelp.textContent = "Senha inválida.";
+        senhaHelp.textContent = "Senha inválida. Senha deve conter pelo menos 6 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula.";
         senhaHelp.style.color = "red";
         return false;
     } else {
+        if(firstName == undefined || lastName == undefined || anoVal.length == 0){
+            if ((firstName == undefined) || (lastName == undefined)){
+            nomeHelp.textContent = "Nome é obrigatório";
+            nomeHelp.style.color="red";
+            }
+            if (anoVal.length == 0){
+                anoHelp.textContent = "Ano é obrigatório";
+                anoHelp.style.color="red";
+            }
+        } else if (senha.value.includes(firstName) || senha.value.includes(lastName) || senha.value.includes(anoVal)) {
+            senhaHelp.textContent = "Senha inválida. Senha não pode conter nome, sobrenome ou ano de nascimento.";
+            senhaHelp.style.color = "red";
+            return false;
+        }
+
         const numEspeciais = (senha.value.match(/[@#%&!+*]/g) || []).length;
         const numNumeros = (senha.value.match(/[0-9]/g) || []).length;
         const numMaiusculas = (senha.value.match(/[A-Z]/g) || []).length;
