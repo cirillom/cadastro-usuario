@@ -110,12 +110,15 @@ function validarSenha(e) {
 
         if (totalCaracteres > 12 && numEspeciais > 1 && numNumeros > 1 && numMaiusculas > 1){
             senhaHelp.textContent = 'Senha forte';
+            senhaHelp.style.color = "gray";
             meter.value = 30;
         } else if (totalCaracteres > 8){
             senhaHelp.textContent = 'Senha moderada';
+            senhaHelp.style.color = "gray";
             meter.value = 20;
         } else {
             senhaHelp.textContent = 'Senha fraca';
+            senhaHelp.style.color = "gray";
             meter.value = 10;
         }
         return true;
