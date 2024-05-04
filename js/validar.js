@@ -21,9 +21,9 @@ nome.addEventListener('focusout', validarSenha);
 function validarNome(){ 
     const regexNome = /^[A-Z][a-z]+ [A-Z][a-z]+$/;
 
-    var noSpacesName = nome.value.replace(/\s+/g, ' ');
+    var noSpacesName = nome.value.replace(/\s/g, '');
 
-    if(nome.value.trim().match(regexNome)==null || noSpacesName.value.trim().length <= 6){
+    if(!nome.value.trim().match(regexNome) || noSpacesName.length <= 6){
         nomeHelp.textContent = "Formato de nome inválido"; 
         nomeHelp.style.color="red";
         return false;
