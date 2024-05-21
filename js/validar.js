@@ -97,12 +97,16 @@ function validarSenha(e) {
     const anoVal = ano.value.trim();
 
     if (senha.value.trim().length == 0) {
+        senhaHelp.textContent = "Senha inválida.";
+        senhaHelp.style.color = "red";
+        meter.value = 0;
         return false;
     }
 
     if (!senha.value.match(regexSenha)) {
         senhaHelp.textContent = "Senha inválida. Senha deve conter pelo menos 6 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula.";
         senhaHelp.style.color = "red";
+        meter.value = 0;
         return false;
     } else {
         if(firstName == undefined || lastName == undefined || anoVal.length == 0){
@@ -117,6 +121,7 @@ function validarSenha(e) {
         } else if (senha.value.includes(firstName) || senha.value.includes(lastName) || senha.value.includes(anoVal)) {
             senhaHelp.textContent = "Senha inválida. Senha não pode conter nome, sobrenome ou ano de nascimento.";
             senhaHelp.style.color = "red";
+            meter.value = 0;
             return false;
         }
 
@@ -126,8 +131,8 @@ function validarSenha(e) {
         const totalCaracteres = senha.value.length;
 
         if (totalCaracteres > 12 && numEspeciais > 1 && numNumeros > 1 && numMaiusculas > 1){
-            senhaHelp.textContent = 'Senha forte';
             senhaHelp.style.color = "gray";
+            senhaHelp.textContent = 'Senha forte';
             meter.value = 30;
         } else if (totalCaracteres > 8){
             senhaHelp.textContent = 'Senha moderada';
