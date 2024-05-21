@@ -17,7 +17,7 @@
 ("usu4rio@dominio.com", ""),
 ("matheus@usp.br", ""),
 ("123456789@dominio.org", ""),
-("usu@rio@dominio.com", "inválido"),  # letras, números e símbolos antes do @
+("usu!rio@dominio.com", "inválido"),  # letras, números e símbolos antes do @
 ("@dominio.com", "inválido"),  # nada antes do @
 ("usuario@dom!nio.com", "inválido"),  # letras, números e símbolos entre @ e .
 ("usuario@.com", "inválido"),  # nada entre @ e .
@@ -30,7 +30,6 @@
 ("12345678!", "inválida", "0"), #senha sem letra
 ("abcde1!", "fraca", "10"), #senha fraca
 ("Abcde1!fgh", "moderada", "20"), #senha moderada
-("ABcd13!@fgHI", "moderada", "20"), #senha forte
 ("ABcd123!@fgHI", "forte", "30") #senha forte
 
 (("Matheus", ""), ("2003", ""), ("123456789@dominio.org", ""), ("pabx!@#2003", "inválida", "0")) #caso com nome na senha
