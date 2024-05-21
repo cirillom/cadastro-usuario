@@ -91,7 +91,6 @@ function validarSenha(e) {
 
     const regexSenha = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#%&!+*])[a-zA-Z0-9@#%&!+*]{6,20}$/;
     const firstName = nome.value.trim().split(' ')[0];
-    const lastName = nome.value.trim().split(' ')[1];
     const anoVal = ano.value.trim();
 
     if (senha.value.trim().length == 0) {
@@ -107,18 +106,13 @@ function validarSenha(e) {
         meter.value = 0;
         return false;
     } else {
-        if(firstName == undefined || lastName == undefined || anoVal.length == 0){
-            if ((firstName == undefined) || (lastName == undefined)){
+        nomeHelp.style.color="red";
+        if ((firstName == undefined)){
             nomeHelp.textContent = "Nome é obrigatório";
-            nomeHelp.style.color="red";
-            }
-            if (anoVal.length == 0){
-                anoHelp.textContent = "Ano é obrigatório";
-                anoHelp.style.color="red";
-            }
-        } else if (senha.value.includes(firstName) || senha.value.includes(lastName) || senha.value.includes(anoVal)) {
+        } else if (anoVal.length == 0){
+            anoHelp.textContent = "Ano é obrigatório";
+        } else if (senha.value.includes(firstName) || senha.value.includes(anoVal)) {
             senhaHelp.textContent = "Senha inválida. Senha não pode conter nome, sobrenome ou ano de nascimento.";
-            senhaHelp.style.color = "red";
             meter.value = 0;
             return false;
         }
