@@ -107,10 +107,13 @@ function validarSenha(e) {
         return false;
     } else {
         nomeHelp.style.color="red";
-        if ((firstName == undefined)){
-            nomeHelp.textContent = "Nome é obrigatório";
-        } else if (anoVal.length == 0){
-            anoHelp.textContent = "Ano é obrigatório";
+        if((firstName == undefined) || (anoVal.length == 0)){
+            if ((firstName == undefined)){
+                nomeHelp.textContent = "Nome é obrigatório";
+            }
+            if (anoVal.length == 0){
+                anoHelp.textContent = "Ano é obrigatório";
+            } 
         } else if (senha.value.includes(firstName) || senha.value.includes(anoVal)) {
             senhaHelp.textContent = "Senha inválida. Senha não pode conter nome, sobrenome ou ano de nascimento.";
             meter.value = 0;
