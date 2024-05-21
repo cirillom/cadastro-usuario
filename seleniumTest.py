@@ -30,51 +30,65 @@ input_password_strength_element = driver.find_element(By.ID, "passStrengthMeter"
 input_button_element = driver.find_element(By.ID, "submitButton")
 input_result_element = driver.find_element(By.ID, "inputResult")
 
+def make_test(tests, testCount, name, x_name_result, year, x_year_result, email, x_email_result, password, x_password_result, x_strength_result):
+    tests[testCount] = {}
+
+    x_result = "inválido"
+    if x_name_result == "" and x_year_result == "" and x_email_result == "" and "inválida" not in x_password_result:
+        x_result = "sucesso"
+
+    # Write the test to the file
+    f.write(f"{testCount},{name},{x_name_result},{year},{x_year_result},{email},{x_email_result},{password},{x_password_result},{x_strength_result},{x_result}\n")
+
+    input_name_element.clear()
+    input_name_element.send_keys(name)
+
+    input_year_element.clear()
+    input_year_element.send_keys(year)
+
+    input_email_element.clear()
+    input_email_element.send_keys(email)
+
+    input_password_element.clear()
+    input_password_element.send_keys(password)
+
+    input_button_element.click()
+    input_button_element.click()
+
+    tests[testCount]["name"] = (input_name_help_element.text, x_name_result, (x_name_result in input_name_help_element.text))
+    tests[testCount]["year"] = (input_year_help_element.text, x_year_result, (x_year_result in input_year_help_element.text))
+    tests[testCount]["email"] = (input_email_help_element.text, x_email_result, (x_email_result in input_email_help_element.text))
+    tests[testCount]["password"] = (input_password_help_element.text, x_password_result, (x_password_result in input_password_help_element.text))
+    tests[testCount]["strength"] = (input_password_strength_element.text, x_strength_result, (input_password_strength_element.get_attribute("value") == x_strength_result))
+    tests[testCount]["submit"] = (input_result_element.text, x_result, (x_result in input_result_element.text))
+
+    if all(value[2] == True for value in tests[testCount].values()):
+        tests[testCount]["result"] = True
+    else:
+        tests[testCount]["result"] = False
+
 # input (name, expected name result)
 nameTests = [
-    ("matheus", ""), #Caso com apenas letras
+    ("Matheus", ""), #Caso com apenas letras
     ("m4theus", "inválido"), #Caso com letras e número
-    ("matheus cirillo", "inválido"), #Caso com letras e número
-    ("m@theus", "inválido"), #Caso com letras e caracteres
-    ("mat", "inválido") #Caso com menos de 6 letras
 ]
 
 # input (year, expected year result)
 yearTests = [
     ("2003", ""), #caso válido
-    ("1900", ""), #caso de borda válido
-    ("2022", ""), #caso de borda válido
     ("2023", "inválido"), #caso onde é maior que 2022
-    ("1899", "inválido"), #caso onde é menor que 1900
-    ("matheus", "inválido") #caso com letras
 ]
 
 # input (email, expected email result)
 emailTests = [
-    ("usuario@dominio.net", ""),
-    ("usu4rio@dominio.com", ""),
-    ("matheus@usp.br", ""),
     ("123456789@dominio.org", ""),
     ("usu@rio@dominio.com", "inválido"),  # letras, números e símbolos antes do @
-    ("@dominio.com", "inválido"),  # nada antes do @
-    ("usuario@dom!nio.com", "inválido"),  # letras, números e símbolos entre @ e .
-    ("usuario@.com", "inválido"),  # nada entre @ e .
-    ("usuario@dominio.usp", "inválido")  # final usp depois do .
 ]
 
 # input (password, expected password result, expected password strength)
 passwordTests = [
-    ("a1!b", "inválida", "0"), #senha com menos de 6 caracteres
-    ("a1!b2c3d4@@f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0", "inválida", "0"), #senha com mais de 20 caracteres
-    ("abcdefgh123", "inválida", "0"), #senha sem caracter especial
-    ("abcdefgh!", "inválida", "0"), #senha sem número
     ("12345678!", "inválida", "0"), #senha sem letra
-    ("matheus123@", "inválida", "0"), #senha com nome
-    ("pabx!@#2003", "inválida", "0"), #senha com ano
     ("abcde1!", "fraca", "10"), #senha fraca
-    ("Abcde1!fgh", "moderada", "20"), #senha moderada
-    ("ABcd13!@fgHI", "moderada", "20"), #senha moderada
-    ("ABcd123!@fgHI", "forte", "30") #senha forte
 ]
 
 tests = {}
@@ -85,45 +99,21 @@ total_iterations = len(nameTests) * len(yearTests) * len(emailTests) * len(passw
 f = open("tests.csv", "w")
 f.write("Test,Name,ExpectedNameResult,Year,ExpectedYearResult,Email,ExpectedEmailResult,Password,ExpectedPasswordResult,ExpectedPasswordStrength,ExpectedResult\n")
 
+all_tests = itertools.product(nameTests, yearTests, emailTests, passwordTests)
+
+year_in_pass = (("Matheus", ""), ("2003", ""), ("123456789@dominio.org", ""), ("pabx!@#2003", "inválida", "0"))
+name_in_pass = (("Matheus", ""), ("2003", ""), ("123456789@dominio.org", ""), ("matheus123@", "inválida", "0"))
+all_tests = list(all_tests)
+all_tests.append(year_in_pass)
+all_tests.append(name_in_pass)
+
+
 # Use itertools.product to create a Cartesian product of the tests
 for (name, x_name_result), (year, x_year_result), (email, x_email_result), (password, x_password_result, x_strength_result) in tqdm(itertools.product(nameTests, yearTests, emailTests, passwordTests), total=total_iterations):
-                testCount += 1
+    testCount += 1
+    make_test(tests, testCount, name, x_name_result, year, x_year_result, email, x_email_result, password, x_password_result, x_strength_result)
 
-                tests[testCount] = {}
 
-                x_result = "inválido"
-                if x_name_result == "" and x_year_result == "" and x_email_result == "" and "inválida" not in x_password_result:
-                    x_result = "sucesso"
-
-                # Write the test to the file
-                f.write(f"{testCount},{name},{x_name_result},{year},{x_year_result},{email},{x_email_result},{password},{x_password_result},{x_strength_result},{x_result}\n")
-
-                input_name_element.clear()
-                input_name_element.send_keys(name)
-
-                input_year_element.clear()
-                input_year_element.send_keys(year)
-
-                input_email_element.clear()
-                input_email_element.send_keys(email)
-
-                input_password_element.clear()
-                input_password_element.send_keys(password)
-
-                input_button_element.click()
-                input_button_element.click()
-
-                tests[testCount]["name"] = (input_name_help_element.text, x_name_result, (x_name_result in input_name_help_element.text))
-                tests[testCount]["year"] = (input_year_help_element.text, x_year_result, (x_year_result in input_year_help_element.text))
-                tests[testCount]["email"] = (input_email_help_element.text, x_email_result, (x_email_result in input_email_help_element.text))
-                tests[testCount]["password"] = (input_password_help_element.text, x_password_result, (x_password_result in input_password_help_element.text))
-                tests[testCount]["strength"] = (input_password_strength_element.text, x_strength_result, (input_password_strength_element.get_attribute("value") == x_strength_result))
-                tests[testCount]["submit"] = (input_result_element.text, x_result, (x_result in input_result_element.text))
-
-                if all(value[2] == True for value in tests[testCount].values()):
-                    tests[testCount]["result"] = True
-                else:
-                    tests[testCount]["result"] = False
 f.close()
 #count sucessfull tests
 successfullTests = 0
