@@ -1,37 +1,37 @@
 
 ("matheus", ""), #Caso com apenas letras
-("m4theus", "Formato de nome inválido"), #Caso com letras e número
-("matheus cirillo", "Formato de nome inválido"), #Caso com letras e número
-("m@theus", "Formato de nome inválido"), #Caso com letras e caracteres
-("mat", "Formato de nome inválido") #Caso com menos de 6 letras
+("m4theus", "inválido"), #Caso com letras e número
+("matheus cirillo", "inválido"), #Caso com letras e número
+("m@theus", "inválido"), #Caso com letras e caracteres
+("mat", "inválido") #Caso com menos de 6 letras
 
 ("2003", ""), #caso válido
 ("1900", ""), #caso de borda válido
 ("2022", ""), #caso de borda válido
-("2023", "Ano inválido. O ano não pode ser maior que 2022."), #caso onde é maior que 2022
-("1899", "Ano inválido. O ano não pode ser menor que 1900."), #caso onde é menor que 1900
-("matheus", "Formato de ano inválido") #caso com letras
+("2023", "inválido"), #caso onde é maior que 2022
+("1899", "inválido"), #caso onde é menor que 1900
+("matheus", "inválido") #caso com letras
 
 # Casos válidos
 ("usuario@dominio.net", ""),
 ("usu4rio@dominio.com", ""),
 ("matheus@usp.br", ""),
 ("123456789@dominio.org", ""),
-("usu@rio@dominio.com", "Formato de email inválido"),  # letras, números e símbolos antes do @
-("@dominio.com", "Formato de email inválido"),  # nada antes do @
-("usuario@dom!nio.com", "Formato de email inválido"),  # letras, números e símbolos entre @ e .
-("usuario@.com", "Formato de email inválido"),  # nada entre @ e .
-("usuario@dominio.usp", "Formato de email inválido")  # final usp depois do .
+("usu@rio@dominio.com", "inválido"),  # letras, números e símbolos antes do @
+("@dominio.com", "inválido"),  # nada antes do @
+("usuario@dom!nio.com", "inválido"),  # letras, números e símbolos entre @ e .
+("usuario@.com", "inválido"),  # nada entre @ e .
+("usuario@dominio.usp", "inválido")  # final usp depois do .
 
-("a1!b", "Senha inválida", 0), #senha com menos de 6 caracteres
-("a1!b2c3d4@@f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0", "Senha inválida", 0), #senha com mais de 20 caracteres
-("abcdefgh123", "Senha inválida", 0), #senha sem caracter especial
-("abcdefgh!", "Senha inválida", 0), #senha sem número
-("12345678!", "Senha inválida", 0), #senha sem letra
-("matheus123@", "Senha inválida", 0), #senha com nome
-("pabx!@#2003", "Senha inválida", 0), #senha com ano
-("abcde1!", "Senha fraca", 10), #senha fraca
-("Abcde1!fgh", "Senha moderada", 20), #senha moderada
-("ABcd13!@fgHI", "Senha moderada", 20), #senha forte
-("ABcd123!@fgHI", "Senha forte", 30) #senha forte
+("a1!b", "inválida", "0"), #senha com menos de 6 caracteres
+("a1!b2c3d4@@f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0", "inválida", "0"), #senha com mais de 20 caracteres
+("abcdefgh123", "inválida", "0"), #senha sem caracter especial
+("abcdefgh!", "inválida", "0"), #senha sem número
+("12345678!", "inválida", "0"), #senha sem letra
+("matheus123@", "inválida", "0"), #senha com nome
+("pabx!@#2003", "inválida", "0"), #senha com ano
+("abcde1!", "fraca", "10"), #senha fraca
+("Abcde1!fgh", "moderada", "20"), #senha moderada
+("ABcd13!@fgHI", "moderada", "20"), #senha forte
+("ABcd123!@fgHI", "forte", "30") #senha forte
 

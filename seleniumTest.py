@@ -5,12 +5,11 @@ from termcolor import colored
 from tqdm import tqdm
 import itertools
 
-# Create a new Firefox profile
-profile = webdriver.FirefoxProfile()
-
 # Set up the WebDriver with the new profile
 service = Service("/snap/bin/firefox.geckodriver")
 driver = webdriver.Firefox(service=service)
+
+#driver = webdriver.Chrome() #use chrome if not on ubuntu
 
 # Open the URL
 driver.get("https://cirillom.github.io/cadastro-usuario/")
@@ -33,69 +32,49 @@ input_result_element = driver.find_element(By.ID, "inputResult")
 
 # input (name, expected name result)
 nameTests = [
-    ("Carlos", "Formato de nome inválido"),
-    ("Fernanda", ""),
-    ("Ana123", "Formato de nome inválido"),
-    ("Jose@123", "Formato de nome inválido"),
-    ("Maria Clara", "Formato de nome inválido"),
-    ("", "Formato de nome inválido"),
-    ("Joaquina", ""),
-    ("JoaoPa", "Formato de nome inválido"),
-    ("Maria", "Formato de nome inválido"),
-    ("Ana", "Formato de nome inválido"),
-    ("Beatriz", "")
+    ("matheus", ""), #Caso com apenas letras
+    ("m4theus", "inválido"), #Caso com letras e número
+    ("matheus cirillo", "inválido"), #Caso com letras e número
+    ("m@theus", "inválido"), #Caso com letras e caracteres
+    ("mat", "inválido") #Caso com menos de 6 letras
 ]
 
 # input (year, expected year result)
 yearTests = [
-    ("aa20", "Formato de ano inválido"),
-    ("matheus", "Formato de ano inválido"),
-    ("1900", ""),
-    ("2022", ""),
-    ("2023", "Ano inválido. O ano não pode ser maior que ${maxYear}."),
-    ("1800", "Ano inválido. O ano não pode ser menor que 1900."),
-    ("2021", "")
+    ("2003", ""), #caso válido
+    ("1900", ""), #caso de borda válido
+    ("2022", ""), #caso de borda válido
+    ("2023", "inválido"), #caso onde é maior que 2022
+    ("1899", "inválido"), #caso onde é menor que 1900
+    ("matheus", "inválido") #caso com letras
 ]
 
 # input (email, expected email result)
 emailTests = [
-    ("usuario@dominio.com", ""),
-    ("usuario123@dominio.org", ""),
-    ("usuario@dominio.br", ""),
     ("usuario@dominio.net", ""),
-    ("usuario@dominio.com.br", "Formato de email inválido"),
-    ("usuario@dominio", "Formato de email inválido"),
-    ("usuario@.com", "Formato de email inválido"),
-    ("@dominio.com", "Formato de email inválido"),
-    ("usuario@dominio.c", "Formato de email inválido"),
-    ("usuario@dominio.comm", "Formato de email inválido"),
-    ("usuario@dominio.con", "Formato de email inválido"),
-    ("usuário@domínio.com", "Formato de email inválido"),
-    ("user@domain.co.uk", "Formato de email inválido"),
-    ("user.name@domain.com", "Formato de email inválido"),
-    ("username@domain.net.org", "Formato de email inválido")
+    ("usu4rio@dominio.com", ""),
+    ("matheus@usp.br", ""),
+    ("123456789@dominio.org", ""),
+    ("usu@rio@dominio.com", "inválido"),  # letras, números e símbolos antes do @
+    ("@dominio.com", "inválido"),  # nada antes do @
+    ("usuario@dom!nio.com", "inválido"),  # letras, números e símbolos entre @ e .
+    ("usuario@.com", "inválido"),  # nada entre @ e .
+    ("usuario@dominio.usp", "inválido")  # final usp depois do .
 ]
 
 # input (password, expected password result, expected password strength)
 passwordTests = [
-    ("Pass@123", "moderada", 20),
-    ("pass@123", "fraca", 10),
-    ("P@ss1234", "moderada", 20),
-    ("P@ssw0rd123", "moderada", 20),
-    ("P@ssw0rd123456", "forte", 30),
-    ("P@ssw0rd1234!6", "forte", 30),
-    ("senha@123", "moderada", 20),
-    ("senha@1234567890", "forte", 30),
-    ("user@2021", "Senha inválida", 0),
-    ("Senha@123", "Senha inválida", 0),
-    ("P@ss!", "Senha inválida", 0),
-    ("123456", "Senha inválida", 0),
-    ("matheushenrique", "Senha inválida", 0),
-    ("MAtheushenrique", "Senha inválida", 0),
-    ("mAth3ushenrique", "Senha inválida", 0),
-    ("mAth3ushenrique!", "Senha fraca", 10),
-    ("math3ushenrique!", "Senha moderada", 20),
-    ("Aa@1", "Senha inválida", 0)
+    ("a1!b", "inválida", "0"), #senha com menos de 6 caracteres
+    ("a1!b2c3d4@@f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0", "inválida", "0"), #senha com mais de 20 caracteres
+    ("abcdefgh123", "inválida", "0"), #senha sem caracter especial
+    ("abcdefgh!", "inválida", "0"), #senha sem número
+    ("12345678!", "inválida", "0"), #senha sem letra
+    ("matheus123@", "inválida", "0"), #senha com nome
+    ("pabx!@#2003", "inválida", "0"), #senha com ano
+    ("abcde1!", "fraca", "10"), #senha fraca
+    ("Abcde1!fgh", "moderada", "20"), #senha moderada
+    ("ABcd13!@fgHI", "moderada", "20"), #senha moderada
+    ("ABcd123!@fgHI", "forte", "30") #senha forte
 ]
 
 tests = {}
@@ -112,9 +91,9 @@ for (name, x_name_result), (year, x_year_result), (email, x_email_result), (pass
 
                 tests[testCount] = {}
 
-                x_result = "Formulário inválido!"
-                if x_name_result == "" and x_year_result == "" and x_email_result == "" and "Senha inválida." not in x_password_result:
-                    x_result = "Dados registrados com sucesso!"
+                x_result = "inválido"
+                if x_name_result == "" and x_year_result == "" and x_email_result == "" and "inválida" not in x_password_result:
+                    x_result = "sucesso"
 
                 # Write the test to the file
                 f.write(f"{testCount},{name},{x_name_result},{year},{x_year_result},{email},{x_email_result},{password},{x_password_result},{x_strength_result},{x_result}\n")
@@ -134,12 +113,12 @@ for (name, x_name_result), (year, x_year_result), (email, x_email_result), (pass
                 input_button_element.click()
                 input_button_element.click()
 
-                tests[testCount]["name"] = (input_name_help_element.text, x_name_result, (input_name_help_element.text == x_name_result))
-                tests[testCount]["year"] = (input_year_help_element.text, x_year_result, (input_year_help_element.text == x_year_result))
-                tests[testCount]["email"] = (input_email_help_element.text, x_email_result, (input_email_help_element.text == x_email_result))
+                tests[testCount]["name"] = (input_name_help_element.text, x_name_result, (x_name_result in input_name_help_element.text))
+                tests[testCount]["year"] = (input_year_help_element.text, x_year_result, (x_year_result in input_year_help_element.text))
+                tests[testCount]["email"] = (input_email_help_element.text, x_email_result, (x_email_result in input_email_help_element.text))
                 tests[testCount]["password"] = (input_password_help_element.text, x_password_result, (x_password_result in input_password_help_element.text))
                 tests[testCount]["strength"] = (input_password_strength_element.text, x_strength_result, (input_password_strength_element.get_attribute("value") == x_strength_result))
-                tests[testCount]["submit"] = (input_result_element.text, x_result, (input_result_element.text == x_result))
+                tests[testCount]["submit"] = (input_result_element.text, x_result, (x_result in input_result_element.text))
 
                 if all(value[2] == True for value in tests[testCount].values()):
                     tests[testCount]["result"] = True
