@@ -1,17 +1,17 @@
 Test,Name,ExpectedNameResult,Year,ExpectedYearResult,Email,ExpectedEmailResult,Password,ExpectedPasswordResult,ExpectedPasswordStrength,ExpectedResult
-1,Matheus,,2003,,123456789@dominio.org,,12345678!,inválida,0,inválido
-2,Matheus,,2003,,123456789@dominio.org,,abcde1!,fraca,10,sucesso
-3,Matheus,,2003,,usu@rio@dominio.com,inválido,12345678!,inválida,0,inválido
-4,Matheus,,2003,,usu@rio@dominio.com,inválido,abcde1!,fraca,10,inválido
-5,Matheus,,2023,inválido,123456789@dominio.org,,12345678!,inválida,0,inválido
-6,Matheus,,2023,inválido,123456789@dominio.org,,abcde1!,fraca,10,inválido
-7,Matheus,,2023,inválido,usu@rio@dominio.com,inválido,12345678!,inválida,0,inválido
-8,Matheus,,2023,inválido,usu@rio@dominio.com,inválido,abcde1!,fraca,10,inválido
-9,m4theus,inválido,2003,,123456789@dominio.org,,12345678!,inválida,0,inválido
-10,m4theus,inválido,2003,,123456789@dominio.org,,abcde1!,fraca,10,inválido
-11,m4theus,inválido,2003,,usu@rio@dominio.com,inválido,12345678!,inválida,0,inválido
-12,m4theus,inválido,2003,,usu@rio@dominio.com,inválido,abcde1!,fraca,10,inválido
-13,m4theus,inválido,2023,inválido,123456789@dominio.org,,12345678!,inválida,0,inválido
-14,m4theus,inválido,2023,inválido,123456789@dominio.org,,abcde1!,fraca,10,inválido
-15,m4theus,inválido,2023,inválido,usu@rio@dominio.com,inválido,12345678!,inválida,0,inválido
-16,m4theus,inválido,2023,inválido,usu@rio@dominio.com,inválido,abcde1!,fraca,10,inválido
+1,Matheus,,2003,,123456789@dominio.org,,12345678!,inválida,0,Seus dados não foram registrados!
+2,Matheus,,2003,,123456789@dominio.org,,abcde1!,fraca,10,Seus dados foram registrados!
+3,Matheus,,2003,,usu@rio@dominio.com,inválido,12345678!,inválida,0,Seus dados não foram registrados!
+4,Matheus,,2003,,usu@rio@dominio.com,inválido,abcde1!,fraca,10,Seus dados não foram registrados!
+5,Matheus,,2023,inválido,123456789@dominio.org,,12345678!,inválida,0,Seus dados não foram registrados!
+6,Matheus,,2023,inválido,123456789@dominio.org,,abcde1!,fraca,10,Seus dados não foram registrados!
+7,Matheus,,2023,inválido,usu@rio@dominio.com,inválido,12345678!,inválida,0,Seus dados não foram registrados!
+8,Matheus,,2023,inválido,usu@rio@dominio.com,inválido,abcde1!,fraca,10,Seus dados não foram registrados!
+9,m4theus,inválido,2003,,123456789@dominio.org,,12345678!,inválida,0,Seus dados não foram registrados!
+10,m4theus,inválido,2003,,123456789@dominio.org,,abcde1!,fraca,10,Seus dados não foram registrados!
+11,m4theus,inválido,2003,,usu@rio@dominio.com,inválido,12345678!,inválida,0,Seus dados não foram registrados!
+12,m4theus,inválido,2003,,usu@rio@dominio.com,inválido,abcde1!,fraca,10,Seus dados não foram registrados!
+13,m4theus,inválido,2023,inválido,123456789@dominio.org,,12345678!,inválida,0,Seus dados não foram registrados!
+14,m4theus,inválido,2023,inválido,123456789@dominio.org,,abcde1!,fraca,10,Seus dados não foram registrados!
+15,m4theus,inválido,2023,inválido,usu@rio@dominio.com,inválido,12345678!,inválida,0,Seus dados não foram registrados!
+16,m4theus,inválido,2023,inválido,usu@rio@dominio.com,inválido,abcde1!,fraca,10,Seus dados não foram registrados!

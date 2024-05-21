@@ -12,7 +12,7 @@ driver = webdriver.Firefox(service=service)
 #driver = webdriver.Chrome() #use chrome if not on ubuntu
 
 # Open the URL
-driver.get("https://cirillom.github.io/cadastro-usuario/")
+driver.get("https://guscarenci.github.io/desafioWebDev/")
 
 input_name_element = driver.find_element(By.ID, "inputName")
 input_name_help_element = driver.find_element(By.ID, "inputNameHelp")
@@ -27,15 +27,15 @@ input_password_element = driver.find_element(By.ID, "inputPassword")
 input_password_help_element = driver.find_element(By.ID, "inputPasswordHelp")
 input_password_strength_element = driver.find_element(By.ID, "passStrengthMeter")
 
-input_button_element = driver.find_element(By.ID, "submitButton")
-input_result_element = driver.find_element(By.ID, "inputResult")
+input_button_element = driver.find_element(By.CSS_SELECTOR, ".btn")
+input_result_element = driver.find_element(By.ID, "formMessage")
 
 def make_test(tests, testCount, name, x_name_result, year, x_year_result, email, x_email_result, password, x_password_result, x_strength_result):
     tests[testCount] = {}
 
-    x_result = "inválido"
+    x_result = "Seus dados não foram registrados!"
     if x_name_result == "" and x_year_result == "" and x_email_result == "" and "inválida" not in x_password_result:
-        x_result = "sucesso"
+        x_result = "Seus dados foram registrados!"
 
     # Write the test to the file
     f.write(f"{testCount},{name},{x_name_result},{year},{x_year_result},{email},{x_email_result},{password},{x_password_result},{x_strength_result},{x_result}\n")
