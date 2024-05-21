@@ -90,6 +90,11 @@ passwordTests = [
     ("Senha@123", "Senha inválida", 0),
     ("P@ss!", "Senha inválida", 0),
     ("123456", "Senha inválida", 0),
+    ("matheushenrique", "Senha inválida", 0),
+    ("MAtheushenrique", "Senha inválida", 0),
+    ("mAth3ushenrique", "Senha inválida", 0),
+    ("mAth3ushenrique!", "Senha fraca", 10),
+    ("math3ushenrique!", "Senha moderada", 20),
     ("Aa@1", "Senha inválida", 0)
 ]
 
