@@ -33,27 +33,64 @@ input_result_element = driver.find_element(By.ID, "inputResult")
 
 # input (name, expected name result)
 nameTests = [
-    ("Gus", ""),
-    ("Gustavo Moura", ""),
-    ("", "Formato de nome inválido")
+    ("Carlos", "Formato de nome inválido"),
+    ("Fernanda", ""),
+    ("Ana123", "Formato de nome inválido"),
+    ("Jose@123", "Formato de nome inválido"),
+    ("Maria Clara", "Formato de nome inválido"),
+    ("", "Formato de nome inválido"),
+    ("Joaquina", ""),
+    ("JoaoPa", "Formato de nome inválido"),
+    ("Maria", "Formato de nome inválido"),
+    ("Ana", "Formato de nome inválido"),
+    ("Beatriz", "")
 ]
 
 # input (year, expected year result)
 yearTests = [
-    ("1999", ""),
-    ("", "Formato de ano inválido")
+    ("aa20", "Formato de ano inválido"),
+    ("matheus", "Formato de ano inválido"),
+    ("1900", ""),
+    ("2022", ""),
+    ("2023", "Ano inválido. O ano não pode ser maior que ${maxYear}."),
+    ("1800", "Ano inválido. O ano não pode ser menor que 1900."),
+    ("2021", "")
 ]
 
 # input (email, expected email result)
 emailTests = [
-    ("gustavoscarenci@usp.br", ""),
-    ("", "Formato de email inválido")
+    ("usuario@dominio.com", ""),
+    ("usuario123@dominio.org", ""),
+    ("usuario@dominio.br", ""),
+    ("usuario@dominio.net", ""),
+    ("usuario@dominio.com.br", "Formato de email inválido"),
+    ("usuario@dominio", "Formato de email inválido"),
+    ("usuario@.com", "Formato de email inválido"),
+    ("@dominio.com", "Formato de email inválido"),
+    ("usuario@dominio.c", "Formato de email inválido"),
+    ("usuario@dominio.comm", "Formato de email inválido"),
+    ("usuario@dominio.con", "Formato de email inválido"),
+    ("usuário@domínio.com", "Formato de email inválido"),
+    ("user@domain.co.uk", "Formato de email inválido"),
+    ("user.name@domain.com", "Formato de email inválido"),
+    ("username@domain.net.org", "Formato de email inválido")
 ]
 
 # input (password, expected password result, expected password strength)
 passwordTests = [
-    ("3uAm@Pud1m99", "Senha moderada", "20"),
-    ("", "Senha inválida.", "0"),
+    ("Pass@123", "moderada", 20),
+    ("pass@123", "fraca", 10),
+    ("P@ss1234", "moderada", 20),
+    ("P@ssw0rd123", "moderada", 20),
+    ("P@ssw0rd123456", "forte", 30),
+    ("P@ssw0rd1234!6", "forte", 30),
+    ("senha@123", "moderada", 20),
+    ("senha@1234567890", "forte", 30),
+    ("user@2021", "Senha inválida", 0),
+    ("Senha@123", "Senha inválida", 0),
+    ("P@ss!", "Senha inválida", 0),
+    ("123456", "Senha inválida", 0),
+    ("Aa@1", "Senha inválida", 0)
 ]
 
 tests = {}
