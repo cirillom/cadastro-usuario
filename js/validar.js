@@ -22,7 +22,7 @@ function validarNome(){
     formResult.textContent = "";
     const regexNome = /^[A-Z][a-z]+$/;
     
-    if(!nome.value.trim().match(regexNome) || noSpacesName.length <= 6){
+    if(!nome.value.trim().match(regexNome) || nome.value.length <= 6){
         nomeHelp.textContent = "Formato de nome inválido"; 
         nomeHelp.style.color="red";
         return false;
